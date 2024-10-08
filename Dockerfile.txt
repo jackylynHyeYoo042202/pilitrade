@@ -12,16 +12,23 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install gd
 
 # Install Composer
+# Use the official Composer image to install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Create a non-root user
+RUN useradd -m appuser
+
+# Switch to the non-root user
+USER appuser
 
 # Set the working directory
 WORKDIR /app
 
 # Copy application files
-COPY . .
+COPY --chown=appuser:appuser . .  # Change ownership of files to the appuser
 
 # Install Composer dependencies
-RUN composer install --ignore-platform-reqs
+RUN composer install --no-dev --optimize-autoloader  # Optional optimizations
 
 # Create necessary directories for Laravel
 RUN mkdir -p /var/log/nginx && mkdir -p /var/cache/nginx
