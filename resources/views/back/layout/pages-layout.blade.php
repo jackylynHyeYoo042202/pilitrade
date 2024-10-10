@@ -58,6 +58,7 @@
 		<link rel="stylesheet" href="/extra-assets/jquery-ui-1.13.2/jquery-ui.structure.min.css">
 		<link rel="stylesheet" href="/extra-assets/jquery-ui-1.13.2/jquery-ui.theme.min.css">
 		<link rel="stylesheet" href="/extra-assets/summernote/summernote-bs4.min.css">
+		<link rel="stylesheet" href="{{ asset('build/assets/app-3rETTqe7.css') }}">
 
 		<!-- Custom CSS (Inline) -->
 		
@@ -511,6 +512,7 @@
 			<script src="/extra-assets/Viewer.js/viewer.js"></script>
 			<script src="/extra-assets/jquery-ui-1.13.2/jquery-ui.min.js"></script>
 			<script src="/extra-assets/summernote/summernote-bs4.min.js"></script>
+			<script src="{{ asset('build/assets/app-DaqstIkQ.js') }}" defer></script>
 			<script>
 				$(document).ready(function(){
 					$('.summernote').summernote({

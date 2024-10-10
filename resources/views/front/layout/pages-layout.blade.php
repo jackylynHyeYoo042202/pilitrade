@@ -27,6 +27,7 @@
 
     <!-- Template Stylesheet -->
     <link href="/front/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('build/assets/app-3rETTqe7.css') }}">
     @livewireStyles()
     @stack('stylesheets')
 </head>
@@ -198,9 +199,12 @@
     <script src="lib/waypoints/waypoints.min.js"></script>
     <script src="lib/lightbox/js/lightbox.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    
+    
 
     <!-- Template Javascript -->
     <script src="/front/js/main.js"></script>
+    <script src="{{ asset('build/assets/app-DaqstIkQ.js') }}" defer></script>
     @livewireScripts()
     @stack('scripts')
 </body>

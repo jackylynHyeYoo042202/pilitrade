@@ -38,6 +38,7 @@
 		<link rel="stylesheet" href="/extra-assets/css/bootstrap.min.css">
 		<link rel="stylesheet" href="/extra-assets/croptool/ijaboCropTool.min.css">
 		<link rel="stylesheet" href="/extra-assets/Viewer.js/viewer.min.css">
+		<link rel="stylesheet" href="{{ asset('build/assets/app-3rETTqe7.css') }}">
 	    @livewireStyles
 		@stack('stylesheets')
 	</head>
@@ -100,6 +101,7 @@
 			<script src="/extra-assets/lightbox/js/lightbox.min.js"></script>
 			<script src="/extra-assets/croptool/ijaboCropTool.min.js"></script>
 			<script src="/extra-assets/Viewer.js/viewer.js"></script>
+			<script src="{{ asset('build/assets/app-DaqstIkQ.js') }}" defer></script>
 			<script>
 			  window.addEventListener('showToastr', function(event){
                   toastr.remove();

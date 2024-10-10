@@ -11,14 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
-            $table->id();
-            $table->string('category_name');
-            $table->string('category_slug')->unique();
-            $table->string('category_image');
-            $table->integer('ordering')->default(10000);
-            $table->timestamps();
-        });
+        // Check if the table already exists
+        if (!Schema::hasTable('categories')) {
+            Schema::create('categories', function (Blueprint $table) {
+                $table->id();
+                $table->string('category_name');
+                $table->string('category_slug')->unique();
+                $table->string('category_image');
+                $table->integer('ordering')->default(10000);
+                $table->timestamps();
+            });
+        }
     }
 
     /**
