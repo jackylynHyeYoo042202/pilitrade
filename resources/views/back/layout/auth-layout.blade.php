@@ -57,11 +57,11 @@
 					@if ( !Route::is('admin.*') )
 
 					@if ( Route::is('seller.login') )
-						<li><a href="{{ route('seller.register') }}">Register</a></li>
+						<li><a href="{{ route('seller.register') }}"></a></li>
 					@else
-						<li><a href="{{ route('seller.login') }}">Login</a></li>
+						<li><a href="{{ route('seller.login') }}"></a></li>
 					@endif
-							
+
 					@endif
 					</ul>
 				</div>

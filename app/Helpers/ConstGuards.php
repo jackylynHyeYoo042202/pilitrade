@@ -5,6 +5,6 @@ namespace App\Helpers;
 class ConstGuards
 {
     const ADMIN = 'admin';
-    const CLIENT = 'client';
+    const BUYER = 'buyer';
     const SELLER = 'seller';
 }

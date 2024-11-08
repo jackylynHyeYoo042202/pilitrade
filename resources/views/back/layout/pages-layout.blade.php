@@ -379,7 +379,7 @@
 						<li>
 							<a href="invoice.html" class="dropdown-toggle no-arrow">
 								<span class="micon bi bi-receipt-cutoff"></span
-								><span class="mtext">Invoice</span>
+								><span class="mtext">User</span>
 							</a>
 						</li>
 						<li>
@@ -425,7 +425,7 @@
 						<li>
 							<a href="invoice.html" class="dropdown-toggle no-arrow">
 								<span class="micon bi bi-receipt-cutoff"></span
-								><span class="mtext">Invoice</span>
+								><span class="mtext">Chats</span>
 							</a>
 						</li>
 

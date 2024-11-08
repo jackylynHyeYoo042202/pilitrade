@@ -1,0 +1,118 @@
+<?php
+
+namespace App\Livewire\Buyer;
+
+use Livewire\Component;
+use App\Models\Buyer;
+use Illuminate\Support\Facades\Hash;
+
+class BuyerProfile extends Component
+{
+    public $tab = null;
+    public $tabname = 'personal_details';
+    public $name, $email, $username, $phone, $address;
+    public $current_password, $new_password, $new_password_confirmation;
+
+    protected $queryString = ['tab'=>['keep'=>true]];
+
+    protected $listeners = [
+        'updateBuyerProfilePage'=>'$refresh'
+    ];
+    public function selectTab($tab){
+        $this->tab = $tab;
+    }
+
+    public function mount(){
+       $this->tab = request()->tab ? request()->tab : $this->tabname;
+
+       //POPULATE
+       $buyer = Buyer::findOrFail(auth('buyer')->id());
+       $this->name = $buyer->name;
+       $this->email = $buyer->email;
+       $this->username = $buyer->username;
+       $this->phone = $buyer->phone;
+       $this->address = $buyer->address;
+    }
+
+    public function updateBuyerPersonalDetails(){
+        //Validate the form
+        $this->validate([
+            'name'=>'required|min:5',
+            'username'=>'nullable|min:5|unique:buyers,username,'.auth('buyer')->id(),
+        ]);
+        $buyer = Buyer::findOrFail(auth('buyer')->id());
+        $buyer->name = $this->name;
+        $buyer->username = $this->username;
+        $buyer->address = $this->address;
+        $buyer->phone = $this->phone;
+        $update = $buyer->save();
+
+        if( $update ){
+            $this->dispatch('updateAdminBuyerHeaderInfo');
+            $this->showToastr('success','Personal Details have been successfully updated.');
+        }else{
+            $this->showToastr('error','Something went wrong.');
+        }
+    }
+
+    public function updatePassword(){
+        $buyer = Buyer::findOrFail(auth('buyer')->id());
+
+        //Validate the form
+        $this->validate([
+            'current_password'=>[
+                'required',
+                function($attribute, $value, $fail) use ($buyer){
+                    if( !Hash::check($value, $buyer->password) ){
+                        return $fail(__('The current password is incorrect.'));
+                    }
+                }
+            ],
+            'new_password'=>'required|min:5|max:45|confirmed'
+        ]);
+
+        //Update password
+        $update = $buyer->update([
+            'password'=>Hash::make($this->new_password)
+        ]);
+
+        if( $update ){
+           //Send email notification to buyer that contains new password
+           $data['buyer'] = $buyer;
+           $data['new_password'] = $this->new_password;
+
+           $mail_body = view('email-templates.buyer-reset-email-template',$data);
+
+           $mailConfig = array(
+              'mail_from_email'=>env('EMAIL_FROM_ADDRESS'),
+              'mail_from_name'=>env('EMAIL_FROM_NAME'),
+              'mail_recipient_email'=>$buyer->email,
+              'mail_recipient_name'=>$buyer->name,
+              'mail_subject'=>'Password changed',
+              'mail_body'=>$mail_body
+           );
+
+           sendEmail($mailConfig);
+           $this->current_password = null;
+           $this->new_password = null;
+           $this->new_password_confirmation = null;
+           $this->showToastr('success','Password successfully updated.');
+        }else{
+            $this->showToastr('error','Something went wrong.');
+        }
+    }
+
+    public function showToastr($type, $message){
+        return $this->dispatch('showToastr',[
+            'type'=>$type,
+            'message'=>$message
+        ]);
+    }
+
+    public function render()
+    {
+        return view('livewire.buyer.buyer-profile',[
+            'buyer'=>buyer::findorFail(auth('buyer')->id())
+        ]);
+    }
+}     

@@ -70,11 +70,11 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="d-flex flex-column text-start footer-item">
                             <h4 class="text-light mb-3">Quick Links</h4>
-                            <a class="btn-link" href="">Shop</a>
+                            <a class="btn-link" href="">Shops</a>
                             <a class="btn-link" href="">About Us</a>
                             <a class="btn-link" href="">Blog</a>
-                            <a class="btn-link" href="">Contact Us</a>
-                            <a class="btn-link" href="">Privacy Policy</a>
+                            <a class="btn-link" href="{{ route('contact') }}">Contact Us</a>
+                            <a class="btn-link" href="{{ route('privacy.policy') }}">Privacy Policy</a>
                             <a class="btn-link" href="">Our Sitemap</a>
                         </div>
                     </div>

@@ -22,6 +22,14 @@ class Authenticate extends Middleware
                 session()->flash('fail', 'You must login first');
                 return route('seller.login');
             }
+
+            if ($request->routeIs('buyer.*')) {
+                session()->flash('fail', 'You must login first');
+                return route('buyer.login');
+            }
         }
+
+        // Return null when the request expects JSON (like in API requests)
+        return null;
     }
 }

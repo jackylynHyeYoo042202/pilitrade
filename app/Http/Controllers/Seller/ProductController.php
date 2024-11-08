@@ -49,7 +49,7 @@ class ProductController extends Controller
          */
         $request->validate([
             'name'=>'required|unique:products,name',
-            'summary'=>'required|min:100',
+            'summary'=>'required|min:30',
             'product_image'=>'required|mimes:png,jpg,jpeg|max:1024',
             'category'=>'required|exists:categories,id',
             'subcategory'=>'required|exists:sub_categories,id',
@@ -299,5 +299,5 @@ class ProductController extends Controller
             return response()->json(['status'=>0,'msg'=>'Something went wrong.']);
         }
     }
+    
 }
-

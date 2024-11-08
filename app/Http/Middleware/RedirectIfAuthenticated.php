@@ -29,6 +29,10 @@ class RedirectIfAuthenticated
                 if( $guard === 'seller' ){
                     return redirect()->route('seller.home');
                 }
+
+                if( $guard === 'buyer' ){
+                    return redirect()->route('buyer.home');
+                }
             }
         }
 

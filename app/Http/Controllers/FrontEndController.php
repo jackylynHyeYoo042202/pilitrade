@@ -2,15 +2,43 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product; 
+use App\Models\Category; 
 use Illuminate\Http\Request;
 
 class FrontEndController extends Controller
 {
     public function homePage(Request $request) {
+        $categories = Category::all();
+    
         $data = [
-            'pageTitle' => 'PiliTrade | Online Marketplace'
+            'pageTitle' => 'PiliTrade | Online Marketplace',
         ];
+    
         return view('front.pages.home', $data);
+    }
+    
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        // Search for products based on the query
+        $products = Product::with('category')
+            ->where('name', 'LIKE', "%{$query}%")
+            ->orWhereHas('category', function ($q) use ($query) {
+                $q->where('category_name', 'LIKE', "%{$query}%");
+            })
+            ->paginate(12); // Adjust the number of items per page
+
+        return view('front.pages.search-results', compact('products', 'query'));
+    }
+
+
+    public function showProductDetail($id)
+    {
+        $product = Product::with('category', 'subcategory')->findOrFail($id);
+        
+        return view('front.pages.product-detail', compact('product'));
     }
 
     public function shopPage(Request $request) {
@@ -75,5 +103,20 @@ class FrontEndController extends Controller
         ];
         return view('front.pages.contact', $data);
     }
-}
 
+    public function privacy(Request $request) {
+        $data = [
+            'pageTitle' => 'Privacy Policy | PiliTrade Marketplace'
+        ];
+        return view('front.pages.privacy');
+    }
+
+    public function terms(Request $request) {
+        $data = [
+            'pageTitle' => 'Terms of Use | PiliTrade Marketplace'
+        ];
+        return view('front.pages.terms');
+    }
+
+
+}    

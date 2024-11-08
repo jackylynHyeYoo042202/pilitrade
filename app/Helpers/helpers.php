@@ -82,12 +82,32 @@ if( !function_exists('get_social_network') ){
     }
 }
 
-//FRONTEND::
+// //FRONTEND::
+// /** GET FRONT END CATEGORIES */
+// if( !function_exists('get_categories') ){
+//     function get_categories(){
+//         $categories = Category::with('subcategories')->orderBy('ordering','asc')->get();
+//         return !empty($categories) ? $categories : [];
+//     }
+// }
+
 /** GET FRONT END CATEGORIES */
 if( !function_exists('get_categories') ){
     function get_categories(){
-        $categories = Category::with('subcategories')->orderBy('ordering','asc')->get();
-        return !empty($categories) ? $categories : [];
+        // Fetch categories with their subcategories
+        $categories = Category::with('subcategories')->orderBy('ordering', 'asc')->get();
+        
+        // If you want to include products, you can also do it here
+        foreach ($categories as $category) {
+            // Eager load products for each category
+            $category->load('products');
+
+            // Eager load products for each subcategory
+            foreach ($category->subcategories as $subcategory) {
+                $subcategory->load('products');
+            }
+        }
+
+        return $categories;
     }
 }
-

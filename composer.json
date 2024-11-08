@@ -10,7 +10,7 @@
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
         "laravel/framework": "^10.10",
-        "laravel/sanctum": "^3.2",
+        "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^3.5",
         "phpmailer/phpmailer": "*",
@@ -33,9 +33,9 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files":[
-            "app/helpers/helpers.php",
-            "app/helpers/constDefaults.php",
-            "app/helpers/constGuards.php"
+            "app/Helpers/helpers.php",
+            "app/Helpers/ConstDefaults.php",
+            "app/Helpers/ConstGuards.php"
         ]
     },
     "autoload-dev": {
